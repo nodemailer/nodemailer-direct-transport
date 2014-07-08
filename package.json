@@ -1,6 +1,6 @@
 {
   "name": "nodemailer-direct-transport",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Direct transport for Nodemailer",
   "main": "src/direct-transport.js",
   "scripts": {

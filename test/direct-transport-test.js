@@ -13,6 +13,7 @@ var PORT_NUMBER = 8712;
 function MockBuilder(envelope, message) {
     this.envelope = envelope;
     this.message = message;
+    this._headers = [];
 }
 
 MockBuilder.prototype.getEnvelope = function() {
@@ -26,8 +27,6 @@ MockBuilder.prototype.createReadStream = function() {
 MockBuilder.prototype.getHeader = function() {
     return 'teretere';
 };
-
-MockBuilder.prototype.addHeader = function() {};
 
 describe('SMTP Transport Tests', function() {
     this.timeout(100 * 1000);

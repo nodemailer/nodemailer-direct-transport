@@ -315,7 +315,12 @@ DirectMailer.prototype._process = function(exchange, data, callback) {
  */
 DirectMailer.prototype._formatMessage = function(message) {
     var hostname = this._resolveHostname(this._options.name);
-    message.addHeader('Received', 'from localhost (127.0.0.1) by ' + hostname + ' with SMTP; ' + Date());
+
+    // set the first header as 'Received:'
+    message._headers.unshift({
+        key: 'Received',
+        value: 'from localhost (127.0.0.1) by ' + hostname + ' with SMTP; ' + Date()
+    });
 };
 
 /**
