@@ -96,7 +96,8 @@ DirectMailer.prototype.send = function(mail, callback) {
             accepted: [],
             rejected: [],
             pending: [],
-            errors: []
+            errors: [],
+            envelope: mail.data.envelope || mail.message.getEnvelope()
         };
 
         domains.forEach((function(domain) {
