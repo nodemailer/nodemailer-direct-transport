@@ -71,7 +71,7 @@ DirectMailer.prototype.send = function(mail, callback) {
     // We cant't run existing streams more than once so we need to change these
     // to buffers. Filenames, URLs etc are not affected – for every
     // message copy a new file stream will be created
-    this._clearStreams(mail.message, function() {
+    this._clearStreams(mail, function() {
 
         this._formatMessage(mail.message);
 
@@ -331,7 +331,7 @@ DirectMailer.prototype._formatMessage = function(message) {
  * @param {Object} message BuildMail message object
  * @param {Function} callback Callback to run
  */
-DirectMailer.prototype._clearStreams = function(message, callback) {
+DirectMailer.prototype._clearStreams = function(mail, callback) {
     var streamNodes = [];
 
     function walkNode(node) {
@@ -342,45 +342,18 @@ DirectMailer.prototype._clearStreams = function(message, callback) {
             node.childNodes.forEach(walkNode);
         }
     }
-    walkNode(message);
+    walkNode(mail.message);
 
     function resolveNodes() {
         if (!streamNodes.length) {
             return callback();
         }
-        var chunks = [];
-        var chunklen = 0;
         var node = streamNodes.shift();
-        var resolved = false;
 
-        var errorHandler = function(err) {
-            if (resolved) {
-                return;
+        mail.resolveContent(node, 'content', function(err) {
+            if (err) {
+                node.content = new Buffer('<' + err.message + '>');
             }
-            resolved = true;
-
-            var chunk = new Buffer('<' + err.message + '>');
-
-            chunks.push(chunk);
-            chunklen += chunk.length;
-
-            node.content = Buffer.concat(chunks, chunklen);
-            setImmediate(resolveNodes);
-        };
-        node.content.once('error', errorHandler);
-
-        node.on('data', function(chunk) {
-            chunks.push(chunk);
-            chunklen += chunk.length;
-        });
-
-        node.on('end', function() {
-            if (resolved) {
-                return;
-            }
-            resolved = true;
-
-            node.content = Buffer.concat(chunks, chunklen);
             setImmediate(resolveNodes);
         });
     }
