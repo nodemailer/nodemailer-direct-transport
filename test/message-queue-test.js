@@ -3,7 +3,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 var createMessageQueue = require('../src/message-queue');
-chai.Assertion.includeStack = true;
+chai.config.includeStack = true;
 
 describe('Message Queue Tests', function() {
     var queue;
