@@ -5,7 +5,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 var chai = require('chai');
 var expect = chai.expect;
 var directTransport = require('../src/direct-transport');
-var simplesmtp = require('simplesmtp');
+var SMTPServer = require('smtp-server').SMTPServer;
 chai.config.includeStack = true;
 
 var PORT_NUMBER = 8712;
@@ -35,37 +35,43 @@ describe('SMTP Transport Tests', function() {
     var retryCount = 0;
 
     beforeEach(function(done) {
-        server = new simplesmtp.createServer({
-            ignoreTLS: true,
-            disableDNSValidation: true,
-            enableAuthentication: true,
-            debug: false,
-            authMethods: ['PLAIN', 'XOAUTH2']
-        });
+        server = new SMTPServer({
+            disabledCommands: ['STARTTLS', 'AUTH'],
 
-        server.on('validateSender', function(connection, email, callback) {
-            callback(/invalid@/.test(email) && new Error('Invalid sender'));
-        });
+            onData: function(stream, session, callback) {
+                stream.on('data', function() {});
+                stream.on('end', function() {
+                    var err;
+                    if (/retry@/.test(session.envelope.mailFrom.address) && retryCount++ < 3) {
+                        err = new Error('Please try again later');
+                        err.responseCode = 451;
+                        callback(err);
+                    } else {
+                        callback(null, 'OK');
+                    }
+                });
+            },
 
-        server.on('validateRecipient', function(connection, email, callback) {
-            callback(/invalid@/.test(email) && new Error('Invalid recipient'));
-        });
-
-        server.on('dataReady', function(connection, callback) {
-            var err = new Error('rejected');
-            if (/retry@/.test(connection.from) && retryCount++ < 3) {
-                err.SMTPResponse = '451 4.7.1 Please try again later';
-                callback(err);
-            } else {
-                callback(null, 'OK');
-            }
+            onMailFrom: function(address, session, callback) {
+                if (/invalid@/.test(address.address)) {
+                    return callback(new Error('Invalid sender'));
+                }
+                return callback(); // Accept the address
+            },
+            onRcptTo: function(address, session, callback) {
+                if (/invalid@/.test(address.address)) {
+                    return callback(new Error('Invalid recipient'));
+                }
+                return callback(); // Accept the address
+            },
+            logger: false
         });
 
         server.listen(PORT_NUMBER, done);
     });
 
     afterEach(function(done) {
-        server.end(done);
+        server.close(done);
     });
 
     it('Should expose version number', function() {
