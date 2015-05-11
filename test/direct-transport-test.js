@@ -157,4 +157,46 @@ describe('SMTP Transport Tests', function() {
             done();
         });
     });
+
+    it('Should resolve MX', function(done) {
+        var client = directTransport({
+            port: PORT_NUMBER,
+            debug: false,
+            retryDelay: 1000
+        });
+
+        client._resolveMx('kreata.ee', function(err, list) {
+            expect(err).to.not.exist;
+            expect(list.sort(function(a, b) {
+                return a.priority - b.priority;
+            })).to.deep.equal([{
+                exchange: 'aspmx.l.google.com',
+                priority: 10
+            }, {
+                exchange: 'alt1.aspmx.l.google.com',
+                priority: 20
+            }, {
+                exchange: 'alt2.aspmx.l.google.com',
+                priority: 30
+            }]);
+            done();
+        });
+    });
+
+    it('Should resolve A', function(done) {
+        var client = directTransport({
+            port: PORT_NUMBER,
+            debug: false,
+            retryDelay: 1000
+        });
+
+        client._resolveMx('localhost.kreata.ee', function(err, list) {
+            expect(err).to.not.exist;
+            expect(list).to.deep.equal([{
+                priority: 0,
+                exchange: '127.0.0.1'
+            }]);
+            done();
+        });
+    });
 });

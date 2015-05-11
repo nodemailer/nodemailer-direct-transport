@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.0 2015-10-08
+
+If MX record is not found, fallback to A or AAAA
+
 ## v1.0.2 2015-03-09
 
 Bumped smtp-connection version and replaced simplesmtp based tests with smtp-server based ones.

@@ -369,15 +369,57 @@ DirectMailer.prototype._clearStreams = function(mail, callback) {
  */
 DirectMailer.prototype._resolveMx = function(domain, callback) {
     domain = domain.replace(/[\[\]]/g, '');
+
     // Do not try to resolve the domain name if it is an IP address
     if (net.isIP(domain)) {
         return callback(null, [{
-            'priority': 10,
+            'priority': 0,
             'exchange': domain
         }]);
     }
 
-    dns.resolveMx(domain, callback);
+    dns.resolveMx(domain, function(err, list) {
+        if (err) {
+            if (err.code === 'ENODATA') {
+                // fallback to A
+                dns.resolve4(domain, function(err, list) {
+                    if (err) {
+                        if (err.code === 'ENODATA') {
+                            // fallback to AAAA
+                            dns.resolve6(domain, function(err, list) {
+                                if (err) {
+                                    return callback(err);
+                                }
+
+                                // return the first resolved Ipv6 with priority 0
+                                return callback(null, [].concat(list || []).map(function(entry) {
+                                    return {
+                                        'priority': 0,
+                                        'exchange': entry
+                                    };
+                                }).slice(0, 1));
+                            });
+                        } else {
+                            callback(err);
+                        }
+                        return;
+                    }
+
+                    // return the first resolved Ipv4 with priority 0
+                    return callback(null, [].concat(list || []).map(function(entry) {
+                        return {
+                            'priority': 0,
+                            'exchange': entry
+                        };
+                    }).slice(0, 1));
+                });
+            } else {
+                callback(err);
+            }
+            return;
+        }
+        callback(null, list);
+    });
 };
 
 /**
