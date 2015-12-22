@@ -26,11 +26,15 @@ Where
   * **options** defines connection data
     * **options.name** hostname to be used when introducing the client to the MX server
     * **options.debug** if true, the connection emits all traffic between client and server as 'log' events
+    * **options.port** optional port to use for connecting to MX servers (defaults to MTA standard 25)
+    * **options.retryDelay** optional timeout in ms for retrying failed messages (defaults to 15 minutes)
 
 **Example**
 
 ```javascript
-var transport = nodemailer.createTransport(directTransport());
+var transport = nodemailer.createTransport(directTransport({
+    name: 'smtp.example.com' // should be the hostname machine IP address resolves to
+}));
 ```
 
 ## send callback
