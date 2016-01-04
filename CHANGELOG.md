@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.0.0-beta.0 2016-01-04
+
+  * Replaced jshint with eslint
+  * Replaced logger interface. Instead of emitting 'log' events, use a bunyan-compatible logger
+  * Support IPv6 literal addresses
+
 ## v1.1.0 2015-10-08
 
 If MX record is not found, fallback to A or AAAA
