@@ -25,7 +25,8 @@ Where
 
   * **options** defines connection data
     * **options.name** hostname to be used when introducing the client to the MX server
-    * **options.debug** if true, the connection emits all traffic between client and server as 'log' events
+    * **options.logger** optional [bunyan](https://github.com/trentm/node-bunyan) compatible logger instance. If set to `true` then logs to console. If value is not set or is `false` then nothing is logged
+    * **options.debug** if set to true, then logs SMTP traffic, otherwise logs only transaction events
     * **options.port** optional port to use for connecting to MX servers (defaults to MTA standard 25)
     * **options.retryDelay** optional timeout in ms for retrying failed messages (defaults to 15 minutes)
 
