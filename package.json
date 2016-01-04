@@ -1,8 +1,8 @@
 {
   "name": "nodemailer-direct-transport",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "description": "Direct transport for Nodemailer",
-  "main": "src/direct-transport.js",
+  "main": "lib/direct-transport.js",
   "scripts": {
     "test": "grunt"
   },

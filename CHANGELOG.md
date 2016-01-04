@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.1-beta.0 2016-01-04
+
+  * Fixed invalid source ulr in package.json
+
 ## v2.0.0-beta.0 2016-01-04
 
   * Replaced jshint with eslint
