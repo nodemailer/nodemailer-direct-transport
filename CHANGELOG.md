@@ -1,6 +1,10 @@
 # Changelog
 
-## v2.0.1-beta.0 2016-01-04
+## v2.0.0 2016-01-04
+
+  * Locked dependencies
+
+## v2.0.0-beta.1 2016-01-04
 
   * Fixed invalid source ulr in package.json
 
