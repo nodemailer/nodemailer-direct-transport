@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.0.1 2016-01-20
+
+  * Bumped dependencies
+
 ## v2.0.0 2016-01-04
 
   * Locked dependencies
