@@ -29,6 +29,7 @@ Where
     * **options.debug** if set to true, then logs SMTP traffic, otherwise logs only transaction events
     * **options.port** optional port to use for connecting to MX servers (defaults to MTA standard 25)
     * **options.retryDelay** optional timeout in ms for retrying failed messages (defaults to 15 minutes)
+    * **getSocket** optional method that is called every time a new connection is made against the SMTP server. This method can provide an existing socket to be used instead of creating a new one
 
 **Example**
 

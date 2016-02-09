@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.1.0 2016-02-09
+
+  * Added new option `getSocket`
+
 ## v2.0.1 2016-01-20
 
   * Bumped dependencies
