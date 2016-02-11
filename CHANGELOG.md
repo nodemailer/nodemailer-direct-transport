@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.1 2016-02-11
+
+  * Bumped dependencies
+
 ## v3.0.0 2016-02-11
 
   * Bumped dependencies
