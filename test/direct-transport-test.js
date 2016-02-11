@@ -91,8 +91,8 @@ describe('SMTP Transport Tests', function () {
             debug: true
         });
 
-        var chunks = [],
-            message = new Array(1024).join('teretere, vana kere\n');
+        var chunks = [];
+        var message = new Array(1024).join('teretere, vana kere\n');
 
         server.on('data', function (connection, chunk) {
             chunks.push(chunk);

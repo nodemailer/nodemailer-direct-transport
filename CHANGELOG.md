@@ -1,6 +1,11 @@
 # Changelog
 
-## v2.1.1 2016-02-1
+## v3.0.0 2016-02-11
+
+  * Bumped dependencies
+  * Always try to use STARTTLS first and fallback to plaintext if it fails
+
+## v2.1.1 2016-02-10
 
   * Bumped dependencies
 
