@@ -50,16 +50,16 @@ Send callback includes the following arguments
   * **info** if at least one mail was sent or is pending
     * **info.accepted** an array of recipients that were accepted
     * **info.rejected** an array of recipients that were rejected
-    * **info.pending** an arrray of pending recipient objects (messages that were not rejected permanently and are retried later)
+    * **info.pending** an array of pending recipient objects (messages that were not rejected permanently and are retried later)
       * **info.pending[].recipients** an array of recipient addresses that are still pending
       * **info.pending[].response** Response from the SMTP server
     * **info.errors** An array of errors (for these exhanges that rejected mail)
 
 ## Issues
 
-Direct transport is very inefficient as it queues all e-mails to be sent into memory. Additionally, if a message is not yet sent and the process is closed, all data about queued messages is lost. Thus direct transport is only suitable for low throughput systems, where the message can be processed immediatelly.
+Direct transport is very inefficient as it queues all e-mails to be sent into memory. Additionally, if a message is not yet sent and the process is closed, all data about queued messages is lost. Thus direct transport is only suitable for low throughput systems, where the message can be processed immediately.
 
-While not being 100% reliable (remember - if process exits, entire queue is lost), direct transport can still handle sending errors, graylisting and such. If a message can not be sent, it is requeued and retried later.
+While not being 100% reliable (remember - if process exits, entire queue is lost), direct transport can still handle sending errors, graylisting and such. If a message can not be sent, it is re-queued and retried later.
 
 ## License
 

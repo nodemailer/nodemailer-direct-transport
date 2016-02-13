@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.2 2016-02-13
+
+  * Fixed an issue with proxy support
+
 ## v3.0.1 2016-02-11
 
   * Bumped dependencies
