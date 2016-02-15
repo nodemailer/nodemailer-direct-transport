@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.3 2016-02-15
+
+  * Bumped smtp-connection dependency to fix an issue with proxied sockets and TLS
+
 ## v3.0.2 2016-02-13
 
   * Fixed an issue with proxy support
