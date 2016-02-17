@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.5 2016-02-17
+
+  * Yet another smtp-connection bump
+
 ## v3.0.4 2016-02-16
 
   * Yet another smtp-connection bump to get proxied sockets working
