@@ -1,6 +1,6 @@
 {
   "name": "nodemailer-direct-transport",
-  "version": "3.0.5",
+  "version": "3.0.6",
   "description": "Direct transport for Nodemailer",
   "main": "lib/direct-transport.js",
   "scripts": {
@@ -22,7 +22,7 @@
   "homepage": "http://github.com/andris9/nodemailer-direct-transport",
   "dependencies": {
     "nodemailer-shared": "1.0.4",
-    "smtp-connection": "2.3.0"
+    "smtp-connection": "2.3.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
