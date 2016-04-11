@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.7 2016-04-11
+
+  * Upgraded smtp-connection to fix issues with internationalized email addresses
+
 ## v3.0.5 2016-02-17
 
   * Yet another smtp-connection bump
