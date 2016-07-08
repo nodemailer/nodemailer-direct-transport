@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.2.0 2016-07-08
+
+  * If the first MX fails, then try the next one
+
 ## v3.1.0 2016-05-11
 
   * Bumped dependencies

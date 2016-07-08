@@ -203,6 +203,49 @@ describe('SMTP Transport Tests', function () {
         });
     });
 
+    it('Should send mail to next alternative MX', function (done) {
+        var client = directTransport({
+            port: PORT_NUMBER,
+            logger: false,
+            debug: false
+        });
+
+        var chunks = [];
+        var message = new Array(1024).join('teretere, vana kere\n');
+
+        server.on('data', function (connection, chunk) {
+            chunks.push(chunk);
+        });
+
+        server.on('dataReady', function (connection, callback) {
+            var body = Buffer.concat(chunks);
+            expect(body.toString()).to.equal(message.trim().replace(/\n/g, '\r\n'));
+            callback(null, true);
+        });
+
+        client._resolveMx = function (mx, callback) {
+            callback(null, [{
+                priority: 1,
+                exchange: '255.255.255.255'
+            }, {
+                priority: 2,
+                exchange: '127.0.0.1'
+            }]);
+        };
+
+        client.send({
+            data: {},
+            message: new MockBuilder({
+                from: 'test@test',
+                to: ['test@test']
+            }, message)
+        }, function (err, info) {
+            expect(err).to.not.exist;
+            expect(info.accepted).to.deep.equal(['test@test']);
+            done();
+        });
+    });
+
     it('Should send mail using proxied socket', function (done) {
         var client = directTransport({
             port: 25,
