@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.2 2016-09-05
+
+  * Fetch envelope from message object
+
 ## v3.3.0 2016-09-05
 
   * Updated dependencies
